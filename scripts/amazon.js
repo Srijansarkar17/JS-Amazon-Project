@@ -57,7 +57,7 @@ products.forEach((product) => { //basically we are looping through each product 
           </div>
 
           <div class="product-price">
-            $${product.priceCents/100}
+            $${(product.priceCents/100).toFixed(2)} <!-- shows upto 2 decimal places-->
           </div>
 
           <div class="product-quantity-container">
