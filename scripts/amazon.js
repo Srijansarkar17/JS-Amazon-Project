@@ -96,7 +96,7 @@ products.forEach((product) => { //basically we are looping through each product 
           </div>
 
           <button class="add-to-cart-button button-primary js-add-to-cart"
-          data-product-name="${product.name}"> <!--to add a data attribute to each of the buttons so that when we click an add-to-cart button, we know which product to add-->
+          data-product-id="${product.id}"> <!--to add a data attribute to each of the buttons so that when we click an add-to-cart button, we know which product to add-->
             Add to Cart
           </button>
         </div>
@@ -116,8 +116,8 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
   //we are adding a loop here because we want to select all the buttons with add to cart
   button.addEventListener('click', () => {
     //console.log('added product');
-    console.log(button.dataset.productName); //dataset property gives us all the data attributes attached to the add to cart button(i.e the product name in our case) -> now to only get the product name, we convert product-name to productName
-    const productName = button.dataset.productName; //storing hte product name in a variable
+    console.log(button.dataset.productId); //dataset property gives us all the data attributes attached to the add to cart button(i.e the product id in our case) -> now to only get the product name, we convert product-id to productId
+    const productId = button.dataset.productId; //storing hte product id in a variable
 
     //Steps to add an item in the cart
     // - First we check if the product is there or not
@@ -126,7 +126,7 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
     let matchingItem;
     //Check if the productName is already in the cartarray
     cart.forEach((item) => {
-      if (productName === item.productName){ //if the product names matched, then that means the product is already in the cart
+      if (productId === item.productId){ //if the product names matched, then that means the product is already in the cart
         matchingItem = item;
 
       }
@@ -135,7 +135,7 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
       matchingItem.quantity++;
     }else{
       cart.push({ //this cart list is from cart.js file
-      productName: productName,
+      productId: productId,
       quantity: 1
     });
     }
