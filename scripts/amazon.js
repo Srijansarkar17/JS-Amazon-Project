@@ -139,11 +139,21 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
       quantity: 1
     });
     }
+    let totalcartQuantity = 0;
 
+    //calculate the total quantity of the cart
+    cart.forEach((item) => {// we loop through the list of objects and calculate the quantity of every item
+      totalcartQuantity+= item.quantity;
+    })
+
+    //now we are updating the top right icon number 
+    document.querySelector('.js-cart-quantity').innerHTML = totalcartQuantity;
     
+    console.log(totalcartQuantity);
     console.log(cart); 
   });
 });
+
 
 //Data Attribute - is just another HTML attribute and it allows us to attach any information to an element
 //data attributes have to start with data-
