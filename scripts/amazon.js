@@ -39,13 +39,13 @@
     priceCents: 1899
 }];
 */
-
-//Now the products list will be coming from products.js
 //NOW WE WILL BE GENERATING HTML USING THIS DATA INSTEAD OF WRITING THE HTML MANUALLY
 
 //TO GENERATE THE HTML, WE CAN LOOP THROUGH THE PRODUCTS ARRAY and FOR EACH OF THESE PRODUCTS WE ARE GONNA CREATE SOME HTML
 
 //in this forEach loop, it takes each object, stores it in the parameter called product and then runs the function
+
+//NOW THE PRODUCTS LIST IS COMING FROM THE products.js FILE
 
 let productsHTML = '';
 
@@ -95,7 +95,8 @@ products.forEach((product) => { //basically we are looping through each product 
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">
+          <button class="add-to-cart-button button-primary js-add-to-cart"
+          data-product-name="${product.name}"> <!--to add a data attribute to each of the buttons so that when we click an add-to-cart button, we know which product to add-->
             Add to Cart
           </button>
         </div>
@@ -108,3 +109,42 @@ console.log(productsHTML);
 
 //displaying the html on the page
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
+
+
+//Functionality of the Add to Cart Button
+document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+  //we are adding a loop here because we want to select all the buttons with add to cart
+  button.addEventListener('click', () => {
+    //console.log('added product');
+    console.log(button.dataset.productName); //dataset property gives us all the data attributes attached to the add to cart button(i.e the product name in our case) -> now to only get the product name, we convert product-name to productName
+    const productName = button.dataset.productName; //storing hte product name in a variable
+
+    //Steps to add an item in the cart
+    // - First we check if the product is there or not
+    // - If the product is already there, then we just increase the quantity instead of repeating the product
+    // - if the product is not there, we add the item to the cart
+    let matchingItem;
+    //Check if the productName is already in the cartarray
+    cart.forEach((item) => {
+      if (productName === item.productName){ //if the product names matched, then that means the product is already in the cart
+        matchingItem = item;
+
+      }
+    });
+    if(matchingItem){  //if the product is already there in the cart, then we just increase the quanitity by one instead of the repeating the name
+      matchingItem.quantity++;
+    }else{
+      cart.push({ //this cart list is from cart.js file
+      productName: productName,
+      quantity: 1
+    });
+    }
+
+    
+    console.log(cart); 
+  });
+});
+
+//Data Attribute - is just another HTML attribute and it allows us to attach any information to an element
+//data attributes have to start with data-
+//we added a data attribute above in the html code (data-product-name="${product.name}")
