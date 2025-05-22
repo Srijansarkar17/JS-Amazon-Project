@@ -3,7 +3,9 @@
 //we are creating a list of products
 //and for each product we have product name, price, rating so for that we will use object
 //so inside the list we create an object
-const products = [{ //for the first product
+
+//now we will use the already created products list that is provided by the youtuber, so we will comment out our list
+/*const product = [{ //for the first product
     image: 'images/products/athletic-cotton-socks-6-pairs.jpg',
     name: 'Black and Gray Athletic Cotton Socks - 6 Pairs',
     rating: { //rating has two things,the no of stars and the count so we created an object for rating
@@ -27,7 +29,18 @@ const products = [{ //for the first product
         count: 56
     },
     priceCents: 799
+}, {
+    image: 'images/products/black-2-slot-toaster.jpg',
+    name: '2 Slot Toaster - Black',
+    rating: {
+      stars: 5,
+      count: 2197
+    },
+    priceCents: 1899
 }];
+*/
+
+//Now the products list will be coming from products.js
 //NOW WE WILL BE GENERATING HTML USING THIS DATA INSTEAD OF WRITING THE HTML MANUALLY
 
 //TO GENERATE THE HTML, WE CAN LOOP THROUGH THE PRODUCTS ARRAY and FOR EACH OF THESE PRODUCTS WE ARE GONNA CREATE SOME HTML
@@ -93,4 +106,5 @@ products.forEach((product) => { //basically we are looping through each product 
 
 console.log(productsHTML);
 
+//displaying the html on the page
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
