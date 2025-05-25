@@ -1,3 +1,7 @@
+import {cart} from '../data/cart.js'; //importing the cart variable from cart.js
+
+
+
 //we need to save data(information about our products), so we will store all of our information data in this js file
 
 //we are creating a list of products
@@ -158,3 +162,17 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
 //Data Attribute - is just another HTML attribute and it allows us to attach any information to an element
 //data attributes have to start with data-
 //we added a data attribute above in the html code (data-product-name="${product.name}")
+
+//MODULES
+//Problem without modules - Earlier when we had a file called cart.js and inside that we had a variable called cart, we could not create another variable called cart inside any other js file. This would create a naming conflict
+
+// Solution with modules - It removes the risk of naming conflicts with modules. We create a container for eg. now the cart variable will be contained inside the cart.js file.
+
+//To create a module, we need to make sure of two things
+//1) Create a file
+//2) Don't load the file with <script>
+
+//For eg we need to access a variable out of a file. To do that, we can do these things:
+//1) Add type="module" attribute
+//2) Export
+//3) Import 
