@@ -1,6 +1,8 @@
-import {cart} from '../data/cart.js'; //importing the cart variable from cart.js
+import {cart, addToCart} from '../data/cart.js'; //importing the cart variable from cart.js
 
-import {products} from '../data/products.js'
+import {products} from '../data/products.js';
+
+//To import everything from a file (import * as cartModule from '../data/cart.js' )
 
 
 
@@ -117,6 +119,22 @@ console.log(productsHTML);
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
 
+
+function updateCartQuantity() {
+    let totalcartQuantity = 0;
+
+    //calculate the total quantity of the cart
+    cart.forEach((cartItem) => {// we loop through the list of objects and calculate the quantity of every item
+      totalcartQuantity+= cartItem.quantity;
+    })
+
+    //now we are updating the top right icon number 
+    document.querySelector('.js-cart-quantity').innerHTML = totalcartQuantity;
+    
+    console.log(totalcartQuantity);
+    console.log(cart);
+}
+
 //Functionality of the Add to Cart Button
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
   //we are adding a loop here because we want to select all the buttons with add to cart
@@ -125,38 +143,9 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
     console.log(button.dataset.productId); //dataset property gives us all the data attributes attached to the add to cart button(i.e the product id in our case) -> now to only get the product name, we convert product-id to productId
     const productId = button.dataset.productId; //storing hte product id in a variable
 
-    //Steps to add an item in the cart
-    // - First we check if the product is there or not
-    // - If the product is already there, then we just increase the quantity instead of repeating the product
-    // - if the product is not there, we add the item to the cart
-    let matchingItem;
-    //Check if the productName is already in the cartarray
-    cart.forEach((item) => {
-      if (productId === item.productId){ //if the product names matched, then that means the product is already in the cart
-        matchingItem = item;
-
-      }
-    });
-    if(matchingItem){  //if the product is already there in the cart, then we just increase the quanitity by one instead of the repeating the name
-      matchingItem.quantity++;
-    }else{
-      cart.push({ //this cart list is from cart.js file
-      productId: productId,
-      quantity: 1
-    });
-    }
-    let totalcartQuantity = 0;
-
-    //calculate the total quantity of the cart
-    cart.forEach((item) => {// we loop through the list of objects and calculate the quantity of every item
-      totalcartQuantity+= item.quantity;
-    })
-
-    //now we are updating the top right icon number 
-    document.querySelector('.js-cart-quantity').innerHTML = totalcartQuantity;
-    
-    console.log(totalcartQuantity);
-    console.log(cart); 
+    addToCart(productId);
+    updateCartQuantity(); //this updates the cart quantity on the top right corner of the web page
+     
   });
 });
 
