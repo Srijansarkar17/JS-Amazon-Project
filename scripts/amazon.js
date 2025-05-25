@@ -1,5 +1,7 @@
 import {cart} from '../data/cart.js'; //importing the cart variable from cart.js
 
+import {products} from '../data/products.js'
+
 
 
 //we need to save data(information about our products), so we will store all of our information data in this js file
