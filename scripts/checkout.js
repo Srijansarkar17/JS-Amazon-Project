@@ -95,4 +95,5 @@ cart.forEach((cartItem) => {
 });
 console.log(cartSummaryHTML);
 
+//since the order-summary class contains both the cart-item-containers so we add the html file inside that
 document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
