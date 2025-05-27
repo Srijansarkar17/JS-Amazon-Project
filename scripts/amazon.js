@@ -2,6 +2,8 @@ import {cart, addToCart} from '../data/cart.js'; //importing the cart variable f
 
 import {products} from '../data/products.js';
 
+import { formatCurrency } from './utils/money.js';
+
 //To import everything from a file (import * as cartModule from '../data/cart.js' )
 
 
@@ -78,7 +80,7 @@ products.forEach((product) => { //basically we are looping through each product 
           </div>
 
           <div class="product-price">
-            $${(product.priceCents/100).toFixed(2)} <!-- shows upto 2 decimal places-->
+            $${formatCurrency(product.priceCents)}
           </div>
 
           <div class="product-quantity-container">

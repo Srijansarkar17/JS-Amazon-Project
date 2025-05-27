@@ -1,5 +1,6 @@
 import {cart} from '../data/cart.js';
-import {products} from '../data/products.js';
+import {products} from '../data/products.js'; //.. represents the folder outside the current folder(scripts)
+import { formatCurrency } from './utils/money.js'; // ./ represents the current folder
 
 let cartSummaryHTML = '';
 
@@ -28,7 +29,7 @@ cart.forEach((cartItem) => {
                   ${matchingProduct.name}
                 </div>
                 <div class="product-price">
-                  $${matchingProduct.priceCents / 100}
+                  $${formatCurrency(matchingProduct.priceCents)}
                 </div>
                 <div class="product-quantity">
                   <span>
@@ -50,7 +51,7 @@ cart.forEach((cartItem) => {
                 <div class="delivery-option">
                   <input type="radio" checked
                     class="delivery-option-input"
-                    name="delivery-option-1">
+                    name="delivery-option-${matchingProduct.id}"> <!--earlier the delivery option was same between both the socks and the basketball. Means we can only check only one circle out of the six circles of socks and basketball because earlier the name="delivery-option-${matchingProduct.id}", now each product is going to have a different delivery option which the user can choose because the name="delivery-option-productid"-->
                   <div>
                     <div class="delivery-option-date">
                       Tuesday, June 21
@@ -63,7 +64,7 @@ cart.forEach((cartItem) => {
                 <div class="delivery-option">
                   <input type="radio"
                     class="delivery-option-input"
-                    name="delivery-option-1">
+                    name="delivery-option-${matchingProduct.id}">
                   <div>
                     <div class="delivery-option-date">
                       Wednesday, June 15
@@ -76,7 +77,7 @@ cart.forEach((cartItem) => {
                 <div class="delivery-option">
                   <input type="radio"
                     class="delivery-option-input"
-                    name="delivery-option-1">
+                    name="delivery-option-${matchingProduct.id}">
                   <div>
                     <div class="delivery-option-date">
                       Monday, June 13
