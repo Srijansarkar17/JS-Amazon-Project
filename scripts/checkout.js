@@ -15,7 +15,8 @@ cart.forEach((cartItem) => {
     });
     //console.log(matchingProduct); --> gets all the matching productdetails for the corresponding productId
     let html = `
-    <div class="cart-item-container">
+    <div class="cart-item-container 
+    js-cart-item-container-${matchingProduct.id}">
             <div class="delivery-date">
               Delivery date: Tuesday, June 21
             </div>
@@ -110,8 +111,17 @@ document.querySelectorAll('.js-delete-link')
 
       //To get to know which product to delete, we are going to add a data-attribute to the delete link(the product id), so that it knows which product to remove
       const productId = link.dataset.productId; //the product-id in HTML is changed to productId
-      console.log(productId);
+      //console.log(productId);
       removeFromCart(productId); //function from cart.js
-      console.log(cart);
+      //console.log(cart);
+
+      //We also have to update the HTML after removing the product from the cart
+      //Steps:
+        //1)Use DOM to get the element to remove
+        //2)Use .remove() method to remove it from the page
+
+      const container = document.querySelector(`.js-cart-item-container-${productId}`);
+      console.log(container);
+      container.remove()
     });
   });
