@@ -1,4 +1,4 @@
-import {cart} from '../data/cart.js';
+import {cart, removeFromCart} from '../data/cart.js';
 import {products} from '../data/products.js'; //.. represents the folder outside the current folder(scripts)
 import { formatCurrency } from './utils/money.js'; // ./ represents the current folder
 
@@ -38,7 +38,7 @@ cart.forEach((cartItem) => {
                   <span class="update-quantity-link link-primary">
                     Update
                   </span>
-                  <span class="delete-quantity-link link-primary">
+                  <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
                     Delete
                   </span>
                 </div>
@@ -98,3 +98,20 @@ console.log(cartSummaryHTML);
 
 //since the order-summary class contains both the cart-item-containers so we add the html file inside that
 document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
+
+//Making the Delete Link of the products interactive
+document.querySelectorAll('.js-delete-link')
+  .forEach((link) => {
+    link.addEventListener('click', () => {
+      console.log('Delete');
+      //when we click the delete link, we will do two things:
+      //1) Remove the product from the cart
+      //2) Update the HTML
+
+      //To get to know which product to delete, we are going to add a data-attribute to the delete link(the product id), so that it knows which product to remove
+      const productId = link.dataset.productId; //the product-id in HTML is changed to productId
+      console.log(productId);
+      removeFromCart(productId); //function from cart.js
+      console.log(cart);
+    });
+  });
