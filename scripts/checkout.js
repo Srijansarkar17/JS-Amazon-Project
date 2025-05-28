@@ -2,6 +2,17 @@ import {cart, removeFromCart} from '../data/cart.js';
 import {products} from '../data/products.js'; //.. represents the folder outside the current folder(scripts)
 import { formatCurrency } from './utils/money.js'; // ./ represents the current folder
 
+import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js'; //instead of using script tag to load the code in the html file, we used something called as an ESM version which can be imported
+
+import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
+
+hello(); //the external library that was imported in checkout.html is used now
+
+const today = dayjs(); //the dayjs library gives us the current date and time
+
+const deliveryDate = today.add(7, 'days'); //this will add 7 days to today's date
+console.log(deliveryDate.format('dddd, MMMM D')); //we are formatting the date, for this refer the dayjs documentation
+
 let cartSummaryHTML = '';
 
 cart.forEach((cartItem) => {
@@ -125,3 +136,9 @@ document.querySelectorAll('.js-delete-link')
       container.remove(container)
     });
   });
+
+//we have to calculate the delivery date and display(choose a delivery option):
+//Steps to do that is:
+  //1)Get today's date using dayjs library
+  //2)Do calculations(Add 7days, ...)
+  //3)Display the date in an easy-to-read format
