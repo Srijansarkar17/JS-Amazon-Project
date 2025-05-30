@@ -67,3 +67,25 @@ export function removeFromCart(productId) {
   cart = newCart;
   saveToStorage(); //function above(to store in localStorage)
 }
+
+export function updateDeliveryOption(productId, deliveryOptionId){
+  //Steps
+   //1)Loop through the cart and find the product through the productId
+   //2)Update the deliveryOptionId of the product
+
+  let matchingItem;
+  //Check if the productName is already in the cartarray
+  cart.forEach((cartItem) => {
+    if (productId === cartItem.productId) { //if the product names matched, then that means the product is already in the cart
+      matchingItem = cartItem;
+
+    }
+  });
+  //this gives us the cart item that matches the productId and save it in matchingItem variable
+
+  matchingItem.deliveryOptionId = deliveryOptionId;
+  //we are getting the deliveryOptionId for the product we have chosen 
+
+  saveToStorage();
+  //now the deliveryOptionId and the productId are stored
+}

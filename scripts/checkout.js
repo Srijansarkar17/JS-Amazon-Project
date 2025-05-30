@@ -1,4 +1,4 @@
-import { cart, removeFromCart } from '../data/cart.js';
+import { cart, removeFromCart, updateDeliveryOption } from '../data/cart.js';
 import { products } from '../data/products.js'; //.. represents the folder outside the current folder(scripts)
 import { formatCurrency } from './utils/money.js'; // ./ represents the current folder
 
@@ -7,7 +7,6 @@ import { hello } from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js'; //i
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 
 import {deliveryOptions} from '../data/delivery-options.js'; //importing the deliveryOptions object that stores the delivery data
-
 hello(); //the external library that was imported in checkout.html is used now
 
 const today = dayjs(); //the dayjs library gives us the current date and time
@@ -109,7 +108,9 @@ function deliveryOptionsHTML(matchingProduct, cartItem) {
 
     const isChecked = deliveryOption.id === cartItem.deliveryOptionId; //to check if the deliveryOption.id matches the deliveryOptionId in the cart: this is done to automatically check one radio button when we enter the page
     html1 += `
-                <div class="delivery-option">
+                <div class="delivery-option js-delivery-option"
+                data-product-id="${matchingProduct.id}"
+                data-delivery-option-id="${deliveryOption.id}">
                   <input type="radio"
                     ${isChecked ? 'checked' : ''}
                     class="delivery-option-input"
@@ -164,3 +165,17 @@ document.querySelectorAll('.js-delete-link')
 //1)Get today's date using dayjs library
 //2)Do calculations(Add 7days, ...)
 //3)Display the date in an easy-to-read format
+
+
+document.querySelectorAll('.js-delivery-option')
+  .forEach((element) => {
+    element.addEventListener('click', () => {
+      const productId = element.dataset.productId;
+      const deliveryOptionId = element.dataset.deliveryOptionId;
+
+      //we are getting the productId and the deliveryOptionId from the data-attribute in html code
+      updateDeliveryOption(productId, deliveryOptionId);
+    });
+
+    //we used this to update the delivery date in the cart when we choose the radio buttons
+  });
