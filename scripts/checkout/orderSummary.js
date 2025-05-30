@@ -1,12 +1,12 @@
 import { cart, removeFromCart, updateDeliveryOption } from '../../data/cart.js';
-import { products } from '../../data/products.js'; //.. represents the folder outside the current folder(scripts)
+import { products , getProduct} from '../../data/products.js'; //.. represents the folder outside the current folder(scripts)
 import { formatCurrency } from '../utils/money.js'; // ./ represents the current folder
 
 import { hello } from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js'; //instead of using script tag to load the code in the html file, we used something called as an ESM version which can be imported
 
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 
-import {deliveryOptions} from '../../data/delivery-options.js'; //importing the deliveryOptions object that stores the delivery data
+import {deliveryOptions, getDeliveryOption} from '../../data/delivery-options.js'; //importing the deliveryOptions object that stores the delivery data
 hello(); //the external library that was imported in checkout.html is used now
 
 const today = dayjs(); //the dayjs library gives us the current date and time
@@ -21,22 +21,11 @@ export function renderOrderSummary() {
   cart.forEach((cartItem) => {
     //we are getting the productId from the cart variable of the cart.js file, but we also need to get the product image, the product name and all that, for that we have to use the products array, in that products array, we are gonna find the matching productId and find the product details from the products array
     const productId = cartItem.productId; //first we are getting the productId from the cart variable inside the cart.js file
-    let matchingProduct;
-    products.forEach((product) => { //then we are looping through the products array inside products.js file to check for the productid and get the matching product details
-      if (product.id === productId) {
-        matchingProduct = product; //we are getting the full product details
-      }
-    });
+    const matchingProduct = getProduct(productId); 
     //console.log(matchingProduct); --> gets all the matching productdetails for the corresponding productId
     const deliveryOptionId = cartItem.deliveryOptionId;
 
-    let deliveryOption;
-
-    deliveryOptions.forEach((option) => {
-      if (option.id === deliveryOptionId) {
-        deliveryOption = option;
-      }
-    })
+    const deliveryOption = getDeliveryOption(deliveryOptionId);
 
     const today = dayjs(); //get today's date
     const deliveryDate = today.add(

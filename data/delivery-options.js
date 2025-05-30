@@ -11,3 +11,14 @@ export const deliveryOptions = [{
     deliveryDays: 1,
     priceCents: 999
 }];
+
+export function getDeliveryOption(deliveryOptionId){
+    let deliveryOption;
+
+    deliveryOptions.forEach((option) => {
+      if (option.id === deliveryOptionId) {
+        deliveryOption = option;
+      }
+    });
+    return deliveryOption || deliveryOptions[0];// || means we are giving default value, i.e if the deliveryOption is not found, then we use default deliveryOption as the first one
+}
