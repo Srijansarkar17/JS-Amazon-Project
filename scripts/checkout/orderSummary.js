@@ -7,6 +7,8 @@ import { hello } from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js'; //i
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 
 import {deliveryOptions, getDeliveryOption} from '../../data/delivery-options.js'; //importing the deliveryOptions object that stores the delivery data
+
+import { renderPaymentSummary } from './paymentSummary.js';
 hello(); //the external library that was imported in checkout.html is used now
 
 const today = dayjs(); //the dayjs library gives us the current date and time
@@ -144,7 +146,8 @@ export function renderOrderSummary() {
 
         const container = document.querySelector(`.js-cart-item-container-${productId}`);
         console.log(container);
-        container.remove(container)
+        container.remove();
+        renderPaymentSummary(); //upon clicking delete button, we again change the payment section according to the updated data
       });
     });
 
@@ -164,6 +167,7 @@ export function renderOrderSummary() {
         //we are getting the productId and the deliveryOptionId from the data-attribute in html code
         updateDeliveryOption(productId, deliveryOptionId);
         renderOrderSummary();//after updating the data, we re-run the code to re-generate all of the html, whenever we change the radio-button so that the date automatically changes
+        renderPaymentSummary(); //when we change the delivery option, again we change the payment section according to the radio button selected
       });
 
       //we used this to update the delivery date in the cart when we choose the radio buttons
