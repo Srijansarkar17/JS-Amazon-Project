@@ -1,19 +1,25 @@
-//Cart page functionality
-export let cart = JSON.parse(localStorage.getItem('cart'));
-//getting the cart from localStorage, we used JSON.parse because localStorage gives us value in string format, we need to convert into object
+export let cart;
 
-//this will happen if the cart does not have any value in localStorage(we give the cart a default value)
-if (!cart) {
-  cart = [{
-    productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
-    quantity: 2,
-    deliveryOptionId: '1'
-  }, {
-    productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
-    quantity: 1,
-    deliveryOptionId: '2'
-  }];
+loadFromStorage();
 
+export function loadFromStorage() {
+  //Cart page functionality
+  cart = JSON.parse(localStorage.getItem('cart'));
+  //getting the cart from localStorage, we used JSON.parse because localStorage gives us value in string format, we need to convert into object
+
+  //this will happen if the cart does not have any value in localStorage(we give the cart a default value)
+  if (!cart) {
+    cart = [{
+      productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+      quantity: 2,
+      deliveryOptionId: '1'
+    }, {
+      productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
+      quantity: 1,
+      deliveryOptionId: '2'
+    }];
+
+  }
 }
 
 //export is to let the cart variable be used outside of cart.js file
@@ -68,10 +74,10 @@ export function removeFromCart(productId) {
   saveToStorage(); //function above(to store in localStorage)
 }
 
-export function updateDeliveryOption(productId, deliveryOptionId){
+export function updateDeliveryOption(productId, deliveryOptionId) {
   //Steps
-   //1)Loop through the cart and find the product through the productId
-   //2)Update the deliveryOptionId of the product
+  //1)Loop through the cart and find the product through the productId
+  //2)Update the deliveryOptionId of the product
 
   let matchingItem;
   //Check if the productName is already in the cartarray

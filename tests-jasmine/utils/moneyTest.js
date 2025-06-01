@@ -1,4 +1,4 @@
-import { formatCurrency } from "../scripts/utils/money.js";
+import { formatCurrency } from "../../scripts/utils/money.js";
 
 //To create a test suite we use a function called descibe in Jasmine
 //first parameter is the name of the test suite and second is a function for the test
