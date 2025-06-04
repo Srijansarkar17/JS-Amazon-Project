@@ -1,17 +1,34 @@
-import {addToCart, cart, loadFromStorage} from '../../data/cart.js';
+import { addToCart, cart, loadFromStorage } from '../../data/cart.js';
 
 
 describe('test suite: Add to Cart', () => {
     //we are testing the if-else statement inside the add to cart function
+
+    //Now we are going to test and insert an existing product in the cart
+    //For that we are gonna mock the localStorage again with an item in the cart
     it('adds an existing product to the cart', () => {
+        spyOn(localStorage, 'setItem');
+        spyOn(localStorage, 'getItem').and.callFake(() => {
+            return JSON.stringify([{
+                productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+                quantity: 1,
+                deliveryOptionId: '1'
+            }]); //the getItem is returning empty array for the test
+        });
+        loadFromStorage();
+        addToCart('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');
+        expect(cart.length).toEqual(1);
+        expect(localStorage.setItem).toHaveBeenCalledTimes(1); //
+        expect(cart[0].productId).toEqual('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');//we are checking whether the productid of the first item of the cart is equal to the productId that we input above or not
+        expect(cart[0].quantity).toEqual(2); //quantity should be one
 
     });
 
     it('adds a new product to the cart', () => {
         //Steps: 
-          //1) We are creating a mock localStorage.getItem where we are returning an empty array so that the addToCart function can add an item and the length becomes 1.
-          //2)Then we reload the cart using loadfromStorage function
-          //3)Then we compare if after adding the product to the cart,if the length increases and becomes 1 or not.
+        //1) We are creating a mock localStorage.getItem where we are returning an empty array so that the addToCart function can add an item and the length becomes 1.
+        //2)Then we reload the cart using loadfromStorage function
+        //3)Then we compare if after adding the product to the cart,if the length increases and becomes 1 or not.
 
         //We are also gonna mock the setItem method of localStorage, because we dont want our test code to modify the localStorage and mess with it
         spyOn(localStorage, 'setItem').and.callFake(() => {
@@ -35,5 +52,8 @@ describe('test suite: Add to Cart', () => {
         //Each test can have multiple expectations and that will pass only if all of the expectations pass
         expect(cart[0].productId).toEqual('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');//we are checking whether the productid of the first item of the cart is equal to the productId that we input above or not
         expect(cart[0].quantity).toEqual(1); //quantity should be one
+
+
+
     })
 })
