@@ -1,12 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tests</title>
+  <meta charset="utf-8">
+  <title>Jasmine Spec Runner v5.1.1</title>
+
+  <link rel="shortcut icon" type="image/png" href="lib/jasmine-5.1.1/jasmine_favicon.png">
+  <link rel="stylesheet" href="lib/jasmine-5.1.1/jasmine.css">
+
+  <script src="lib/jasmine-5.1.1/jasmine.js"></script>
+  <script src="lib/jasmine-5.1.1/jasmine-html.js"></script>
+  <script src="lib/jasmine-5.1.1/boot0.js"></script>
+  <!-- optional: include a file here that configures the Jasmine env -->
+  <script src="lib/jasmine-5.1.1/boot1.js"></script>
+
+  <!-- include source files here... -->
+   <!--this is the code that we want to test-->
+  
+
+  <!-- in Jasmine spec means test -->
+
+  <!-- include spec files here... -->
+   <!-- these files contain the test -->
+  <script src="utils/moneyTest.js" type="module"></script>
+  <script src="data/cartTest.js" type="module"></script>
+  <script src="checkout/orderSummaryTest.js" type="module"></script>
+
 </head>
+
 <body>
-    <!-- the div "js-test-container" is the container that contains the test code -->
-    <script src="moneytest.js" type="module"></script>
+     <div class="js-test-container"></div>
 </body>
 </html>
