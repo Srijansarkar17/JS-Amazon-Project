@@ -5,21 +5,21 @@
 
 //In a class, we give properties and methods and every object that we generate will have these properties and methods
 class Cart {
-    cartItems; //property added to a class
-    localStorageKey;
+    cartItems; //property added to a class(public property)
+    #localStorageKey; //# is added in the front to make this property private(can be used only in the class, cannot be used outside the class)
 
     //lets us run some set-up code for the class
     //constructor runs automatically when an object is generated
     constructor(localStorageKey) {
         //we had a property localStorageKey which was undefined, we had to define it so we use this method
-        this.localStorageKey = localStorageKey;
-        this.loadFromStorage();
+        this.#localStorageKey = localStorageKey; 
+        this.#loadFromStorage(); //since it is a private method so we write #
 
     }
 
-    loadFromStorage() { //added loadFromStorage method to the class
+    #loadFromStorage() { //added loadFromStorage method to the class(private method - so # added in front)(cannot be accessed outside the class)
         //Cart page functionality
-        this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
+        this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
         //getting the cart from localStorage, we used JSON.parse because localStorage gives us value in string format, we need to convert into object
 
         //this  will happen if the cart does not have any value in localStorage(we give the cart a default value)
@@ -38,7 +38,7 @@ class Cart {
     }
 
     saveToStorage(localStorage) {
-        localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems))//since the local storage can only store strings, so we converted into string using JSON.stringify. The name is 'cart' for reference
+        localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems))//since the local storage can only store strings, so we converted into string using JSON.stringify. The name is 'cart' for reference
     }
 
     addToCart(productId) {
