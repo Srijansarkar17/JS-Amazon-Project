@@ -73,14 +73,14 @@ products.forEach((product) => { //basically we are looping through each product 
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="images/ratings/rating-${product.rating.stars * 10}.png"> <!--we multiplied it by 10 because the image is stored in that notation only for example if the rating is 4.5 the image is stored as 45-->
+              src="${product.getStarsUrl()}"> <!--we multiplied it by 10 because the image is stored in that notation only for example if the rating is 4.5 the image is stored as 45, getStarsUrl() is a method inside the class of products.js-->
             <div class="product-rating-count link-primary">
               ${product.rating.count}
             </div>
           </div>
 
           <div class="product-price">
-            $${formatCurrency(product.priceCents)}
+            $${product.getPrice()} <!--getPrice() method is inside the class of products.js-->
           </div>
 
           <div class="product-quantity-container">

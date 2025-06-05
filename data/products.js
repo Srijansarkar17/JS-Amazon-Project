@@ -1,3 +1,5 @@
+import { formatCurrency } from "../scripts/utils/money.js";
+
 export function getProduct(productId) {
   let matchingProduct;
   products.forEach((product) => { //then we are looping through the products array inside products.js file to check for the productid and get the matching product details
@@ -7,6 +9,48 @@ export function getProduct(productId) {
   });
   return matchingProduct;
 }
+
+class Product { //this class is meant to generate products
+  id;
+  image;
+  name;
+  rating;
+  priceCents;
+  //using this constructor, we are converting an object into a class 
+  constructor(productDetails) {
+    this.id = productDetails.id;
+    this.image = productDetails.image;
+    this.name = productDetails.name;
+    this.rating = productDetails.rating;
+    this.priceCents = productDetails.priceCents;
+  }
+
+  getStarsUrl() { //gives us the url for the stars image
+    return `images/ratings/rating-${this.rating.stars * 10}.png`;
+  }
+
+  getPrice() { //gives us the price of the products
+    return `${formatCurrency(this.priceCents)}`;
+  }
+}
+
+const product1 = new Product({ 
+    id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+    image: "images/products/athletic-cotton-socks-6-pairs.jpg",
+    name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
+    rating: {
+      stars: 4.5,
+      count: 87
+    },
+    priceCents: 1090,
+    keywords: [
+      "socks",
+      "sports",
+      "apparel"
+    ]
+  });
+console.log(product1);
+
 
 export const products = [
   {
@@ -667,4 +711,8 @@ export const products = [
       "mens"
     ]
   }
-];
+].map((productDetails) => { //its gonna take each object inside the array, save it in the parameter 'productDetails' and run the function
+  return new Product(productDetails); //converting each object to class(we returned because it forms a new array)
+
+}); //map loops through an array and for each value it runs a function
+console.log(products);
