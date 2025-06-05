@@ -98,6 +98,8 @@ products.forEach((product) => { //basically we are looping through each product 
             </select>
           </div>
 
+          ${product.extraInfoHTML()} <!--this method will only run for Clothing Class because for Products Class we return an empty string-->
+
           <div class="product-spacer"></div>
 
           <div class="added-to-cart">

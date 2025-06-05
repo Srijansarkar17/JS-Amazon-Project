@@ -32,25 +32,73 @@ class Product { //this class is meant to generate products
   getPrice() { //gives us the price of the products
     return `${formatCurrency(this.priceCents)}`;
   }
+
+  extraInfoHTML() {
+    return ''; //this method is just for Clothing class, it does not have any extra info so it returns empty string
+  }
 }
 
-const product1 = new Product({ 
-    id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-    image: "images/products/athletic-cotton-socks-6-pairs.jpg",
-    name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
-    rating: {
-      stars: 4.5,
-      count: 87
-    },
-    priceCents: 1090,
-    keywords: [
-      "socks",
-      "sports",
-      "apparel"
-    ]
-  });
-console.log(product1);
+//PRACTICE CODE
+// const product1 = new Product({ 
+//     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+//     image: "images/products/athletic-cotton-socks-6-pairs.jpg",
+//     name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
+//     rating: {
+//       stars: 4.5,
+//       count: 87
+//     },
+//     priceCents: 1090,
+//     keywords: [
+//       "socks",
+//       "sports",
+//       "apparel"
+//     ]
+//   });
+// console.log(product1);
 
+
+//we are creating a more specific type of product 'Clothing' for which we are creating a class and we are inheritting the properties from Product Class(this means Clothing Class will get all the properties and methods of Product Class and it can also add some of its own properties and methods)
+class Clothing extends Product{
+  sizeChartLink;
+  //if we do not write any constructor, it would have automatically run the parent constructor
+  constructor(productDetails){
+    super(productDetails); //calls the constructor of the parent class i.e of the Product class and initializes the id, image etc.
+    this.sizeChartLink = productDetails.sizeChartLink;
+  }
+
+  //Method overriding(extraInfoHTML was also present in the Product class, but we overrided it)
+  extraInfoHTML() { //this method will generate HTML that has some extra image about this type of product, like the size chart link
+
+    //super.extraInfoHTML(); if we need the parent's method
+    return `
+      <a href="${this.sizeChartLink}" target="_blank">
+        Size Chart
+      </a>
+      <!--target = "_blank" opens a link in a new tab-->
+    `;
+
+  }
+}
+
+//PRACTICE CODE
+// const tshirt = new Clothing({
+//     id: "83d4ca15-0f35-48f5-b7a3-1ea210004f2e",
+//     image: "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
+//     name: "Adults Plain Cotton T-Shirt - 2 Pack",
+//     rating: {
+//       stars: 4.5,
+//       count: 56
+//     },
+//     priceCents: 799,
+//     keywords: [
+//       "tshirts",
+//       "apparel",
+//       "mens"
+//     ],
+//     type: "clothing",
+//     sizeChartLink: "images/clothing-size-chart.png"
+//   });
+//   console.log(tshirt);
 
 export const products = [
   {
@@ -712,6 +760,9 @@ export const products = [
     ]
   }
 ].map((productDetails) => { //its gonna take each object inside the array, save it in the parameter 'productDetails' and run the function
+  if(productDetails.type === 'clothing'){ //if the object has a type property and "clothing" mentioned in it, it will run the Clothing class
+    return new Clothing(productDetails);
+  }
   return new Product(productDetails); //converting each object to class(we returned because it forms a new array)
 
 }); //map loops through an array and for each value it runs a function
