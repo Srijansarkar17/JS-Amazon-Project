@@ -1,11 +1,12 @@
-import {cart, addToCart} from '../data/cart.js'; //importing the cart variable from cart.js
+import { cart, addToCart } from '../data/cart.js'; //importing the cart variable from cart.js
 
-import {products} from '../data/products.js';
+import { products, loadProducts } from '../data/products.js';
 
 import { formatCurrency } from './utils/money.js';
 
 //To import everything from a file (import * as cartModule from '../data/cart.js' )
 
+loadProducts(renderProductsGrid); //this wont work,  this is an asynchronous request, means it will not wait for the request to go and the response to travel back, it will move onto the next line of code automatically, so we pass the  renderProductsGrid function in this function, so that the loadProducts function in products.js can use it.
 
 
 //we need to save data(information about our products), so we will store all of our information data in this js file
@@ -57,9 +58,11 @@ import { formatCurrency } from './utils/money.js';
 
 //NOW THE PRODUCTS LIST IS COMING FROM THE products.js FILE
 
-let productsHTML = '';
+function renderProductsGrid() { //this function will go to the products.js code so that the products can be displayed
 
-products.forEach((product) => { //basically we are looping through each product inside the array and creating html for each product
+  let productsHTML = '';
+
+  products.forEach((product) => { //basically we are looping through each product inside the array and creating html for each product
     let html = `
     <div class="product-container">
           <div class="product-image-container">
@@ -114,45 +117,45 @@ products.forEach((product) => { //basically we are looping through each product 
         </div>
     `;
     //the last step is to combine all the html together and put it all on the web page
-    productsHTML+=html;
-});
+    productsHTML += html;
+  });
 
-console.log(productsHTML);
+  console.log(productsHTML);
 
-//displaying the html on the page
-document.querySelector('.js-products-grid').innerHTML = productsHTML;
+  //displaying the html on the page
+  document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
 
 
-function updateCartQuantity() {
+  function updateCartQuantity() {
     let totalcartQuantity = 0;
 
     //calculate the total quantity of the cart
     cart.forEach((cartItem) => {// we loop through the list of objects and calculate the quantity of every item
-      totalcartQuantity+= cartItem.quantity;
+      totalcartQuantity += cartItem.quantity;
     })
 
     //now we are updating the top right icon number 
     document.querySelector('.js-cart-quantity').innerHTML = totalcartQuantity;
-    
+
     console.log(totalcartQuantity);
     console.log(cart);
-}
+  }
 
-//Functionality of the Add to Cart Button
-document.querySelectorAll('.js-add-to-cart').forEach((button) => {
-  //we are adding a loop here because we want to select all the buttons with add to cart
-  button.addEventListener('click', () => {
-    //console.log('added product');
-    console.log(button.dataset.productId); //dataset property gives us all the data attributes attached to the add to cart button(i.e the product id in our case) -> now to only get the product name, we convert product-id to productId
-    const productId = button.dataset.productId; //storing hte product id in a variable
+  //Functionality of the Add to Cart Button
+  document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+    //we are adding a loop here because we want to select all the buttons with add to cart
+    button.addEventListener('click', () => {
+      //console.log('added product');
+      console.log(button.dataset.productId); //dataset property gives us all the data attributes attached to the add to cart button(i.e the product id in our case) -> now to only get the product name, we convert product-id to productId
+      const productId = button.dataset.productId; //storing hte product id in a variable
 
-    addToCart(productId);
-    updateCartQuantity(); //this updates the cart quantity on the top right corner of the web page
-     
+      addToCart(productId);
+      updateCartQuantity(); //this updates the cart quantity on the top right corner of the web page
+
+    });
   });
-});
-
+};
 
 //Data Attribute - is just another HTML attribute and it allows us to attach any information to an element
 //data attributes have to start with data-
