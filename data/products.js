@@ -100,6 +100,15 @@ class Clothing extends Product{
 //   });
 //   console.log(tshirt);
 
+/*
+//Date is built in class provided by the language(gives us the current date)
+const date = new Date();
+console.log(date);
+console.log(date.toLocaleTimeString()); //gives us the current time
+*/
+
+
+
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
