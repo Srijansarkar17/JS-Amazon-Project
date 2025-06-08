@@ -2,7 +2,7 @@
 
 import { cart,loadFromStorage } from "../../data/cart.js";
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
-
+import { loadProducts } from "../../data/products.js";
 //Create a test Suite
 describe('test suite: Render Order Summary', () => {
     //To check a pagewe have to check two things
@@ -12,6 +12,18 @@ describe('test suite: Render Order Summary', () => {
     //beforeEach function will run before each of our tests(Hooks)
     const productId1 = 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6';
     const productId2 = '15b6fc6f-327a-4ec4-896f-486349e85a3d';
+
+
+    //To test with a backend
+    //beforeAll runs a function before all of our tests
+    beforeAll((done) => { //done is a feature of Jasmine to deal with asynchronous code, it will wait for this feature to run completely and then go to the next code
+        loadProducts(() => {
+            done(); //after this done method only, it will go onto the next code
+        });
+        //We wait until the backenc code, i.e loadProducts() is finished, then we use the done() function to know exactly when to go to the next step
+    });
+
+    //beforEach runs a function before each of our tests
     beforeEach(() => {
         spyOn(localStorage, 'setItem');
         document.querySelector('.js-test-container').innerHTML = `
