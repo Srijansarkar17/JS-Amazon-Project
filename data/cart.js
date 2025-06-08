@@ -95,3 +95,17 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
   saveToStorage();
   //now the deliveryOptionId and the productId are stored
 }
+
+//We are going to load the cart from the backend
+export function loadCart(fun) { //the renderProductsGrid function is passed in this parameter
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener('load', () => {
+    console.log(xhr.response);
+    fun(); //we ran the renderProductsGrid function to display the products right after the fetch from the backend(this means in the addEventListener, right after the response is loaded, we run this function to display the products)
+  });
+  xhr.open('GET', 'https://supersimplebackend.dev/cart');
+
+  xhr.send();
+
+};
