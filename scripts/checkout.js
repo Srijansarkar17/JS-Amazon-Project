@@ -5,6 +5,28 @@ import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 import { loadProducts, loadProductsFetch } from "../data/products.js";
 import { loadCart } from "../data/cart.js";
  
+//async returns a promise, await lets us wait for a promise to finish, before going to the next line
+async function loadPage() { //async = makes a function return a promise
+    console.log('load page');
+
+    await loadProductsFetch() //instead of using .then() for this function to finish, we use await(await waits for loadProductsFetch() to finish and get the response from the backend before going to the next line)
+    await new Promise((resolve) => { //we run the function and wait for it to finish
+        loadCart(() => {
+            resolve();
+        });   
+
+        
+    });
+    //after both loadProductsFetch() and loadCart() have run, we run these codes
+    renderOrderSummary();
+    renderPaymentSummary(); 
+}
+    
+loadPage()
+
+//we can only use await when we are inside an async function
+
+/*
 //PROMISES(it is a class)
  //1) better way to handle asynchronous code
  //2) similar to Jasmine's done() function
@@ -30,6 +52,7 @@ Promise.all([
     renderOrderSummary();
     renderPaymentSummary();
 });
+*/
 
 /*
 new Promise((resolve) => {
