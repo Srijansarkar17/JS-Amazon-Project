@@ -14,14 +14,39 @@ import { loadCart } from "../data/cart.js";
 //First loadProducts()[asynchronous code] is called, then we wait for it to finish, then we run the resolve function which tells us to go to the next code, after that we run the functions inside .then().
 
 //New Promise code flow is that first loadProducts runs, then after that we wait for it to finish, then we hit resolve and go to the next code which is again a new Promise in which loadCart() function is completed, then after both are run, we go to renderOrderSummary() and renderPaymentSummary().
+
+//Right now the two promises to loadProducts() and loadCart() are not running together, for example loadProducts() is running first, then loadCart() is running. But using Promise.all(), we can run both the functions together and wait for all of them to finish
+//In Promise.all, we give an array of promises and both of the promises run at the same time instead of running each promise one by one
+Promise.all([
+    new Promise((resolve) => {
+    console.log('Start Promise')
+    loadProducts(() => {
+        resolve('value1'); //Since loadProducts() has some asynchronous code, it will first finish loadProducts(), after that only the resolve() function will run to go to the next step : we can also give parameters to resolve() and it will be saved inside .then() function, for eg. if we give a parameter 'value1' to resolve, it can be used by .then
+        console.log('finished Loading')
+    });  
+    }),
+    new Promise((resolve) => {
+        loadCart(() => {
+            resolve();
+        });   
+    })
+
+]).then((values) => {
+    console.log(values); //gives an array of values passed by the resolves
+    renderOrderSummary();
+    renderPaymentSummary();
+});
+
+/*
 new Promise((resolve) => {
     console.log('Start Promise')
     loadProducts(() => {
-        resolve(); //Since loadProducts() has some asynchronous code, it will first finish loadProducts(), after that only the resolve() function will run to go to the next step
+        resolve('value1'); //Since loadProducts() has some asynchronous code, it will first finish loadProducts(), after that only the resolve() function will run to go to the next step : we can also give parameters to resolve() and it will be saved inside .then() function, for eg. if we give a parameter 'value1' to resolve, it can be used by .then
         console.log('finished Loading')
     });
     
-}).then(() => { //now in the .then function also loadCart() runs first, then we hit resolve which tells us to go to the next step, after that we go to the .then() code which renders OrderSummary and renderPaymentSummary().
+}).then((value) => { //now in the .then function also loadCart() runs first, then we hit resolve which tells us to go to the next step, after that we go to the .then() code which renders OrderSummary and renderPaymentSummary().
+    console.log(value); //this value is passed by resolve
     console.log("NextStep");
     return new Promise((resolve) => {
         loadCart(() => {
@@ -35,6 +60,7 @@ new Promise((resolve) => {
 //Resolve is a function, works very similar to jasmine's done function -> it lets us control when to go to the next step(this next step is seperate from the rest of the code .then(function) is the next step that is going to run after resolve().)
 
 //The next step is not the function below, the function below is already running. Promises are designed so that multiple pieces of code run together. The Promise() is running sepearately and the loadProducts() is running seperately. Diagram given in Obsidian
+*/
 
 /*
 loadProducts(() => { //it means it will run renderOrderSummary() and renderPaymentSummary() after loadProducts() is finished
