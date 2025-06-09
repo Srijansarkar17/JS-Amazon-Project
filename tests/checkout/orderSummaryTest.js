@@ -2,7 +2,7 @@
 
 import { cart,loadFromStorage } from "../../data/cart.js";
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
-import { loadProducts } from "../../data/products.js";
+import { loadProducts, loadProductsFetch } from "../../data/products.js";
 //Create a test Suite
 describe('test suite: Render Order Summary', () => {
     //To check a pagewe have to check two things
@@ -17,9 +17,10 @@ describe('test suite: Render Order Summary', () => {
     //To test with a backend
     //beforeAll runs a function before all of our tests
     beforeAll((done) => { //done is a feature of Jasmine to deal with asynchronous code, it will wait for this feature to run completely and then go to the next code
-        loadProducts(() => {
-            done(); //after this done method only, it will go onto the next code
-        });
+        loadProductsFetch().then(() => {
+            done(); ///after this done method only, it will go onto the next code
+        }); //this returns a promise, so we can add more steps to this promise using the method .then()
+        
         //We wait until the backenc code, i.e loadProducts() is finished, then we use the done() function to know exactly when to go to the next step
     });
 

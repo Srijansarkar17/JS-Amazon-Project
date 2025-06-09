@@ -2,7 +2,7 @@ import { renderOrderSummary } from "./checkout/orderSummary.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 // import '../data/cart-class.js';
 //import '../data/backend-practice.js';
-import { loadProducts } from "../data/products.js";
+import { loadProducts, loadProductsFetch } from "../data/products.js";
 import { loadCart } from "../data/cart.js";
  
 //PROMISES(it is a class)
@@ -18,13 +18,7 @@ import { loadCart } from "../data/cart.js";
 //Right now the two promises to loadProducts() and loadCart() are not running together, for example loadProducts() is running first, then loadCart() is running. But using Promise.all(), we can run both the functions together and wait for all of them to finish
 //In Promise.all, we give an array of promises and both of the promises run at the same time instead of running each promise one by one
 Promise.all([
-    new Promise((resolve) => {
-    console.log('Start Promise')
-    loadProducts(() => {
-        resolve('value1'); //Since loadProducts() has some asynchronous code, it will first finish loadProducts(), after that only the resolve() function will run to go to the next step : we can also give parameters to resolve() and it will be saved inside .then() function, for eg. if we give a parameter 'value1' to resolve, it can be used by .then
-        console.log('finished Loading')
-    });  
-    }),
+    loadProductsFetch(), //since loadProductsFetch() in the products.js returns a promise, so now we can use it directly
     new Promise((resolve) => {
         loadCart(() => {
             resolve();

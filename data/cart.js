@@ -97,6 +97,14 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
 }
 
 //We are going to load the cart from the backend
+//we are using fetch instead of XMLHTTPRequest
+export function loadCartFetch() {
+  fetch('https://supersimplebackend.dev/cart').then((response) => {
+    return response.json();
+  }).then((cartData) => {
+    console.log(cartData);
+  })
+}
 export function loadCart(fun) { //the renderProductsGrid function is passed in this parameter
   const xhr = new XMLHttpRequest();
 

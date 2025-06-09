@@ -783,6 +783,36 @@ console.log(products);
 
 export let products = [];
 //tutorial to send request and get response from backend is in backend-practice.js file
+
+//we are going to use fetch() to make HTTP requests
+export function loadProductsFetch() {
+  const promise = fetch('https://supersimplebackend.dev/products').then((response) => {
+    return response.json(); //to get the data from the response, we do response.json() i.e the products data, response.json() is asynchronous, it returns a promise so we need to wait for this promise to finish before we continue onto the next step.
+    //Since we added return response.json(), it will wait for response.json() promise to finish before going to the next step
+    console.log(response);
+  }).then((productsData) => { //when the response.json() finishes it gives a parameter of the data inside the response
+    console.log(productsData);
+    products = productsData.map((productDetails) => { //its gonna take each object inside the array, save it in the parameter 'productDetails' and run the function
+      if (productDetails.type === 'clothing') { //if the object has a type property and "clothing" mentioned in it, it will run the Clothing class
+        return new Clothing(productDetails);
+      }
+      return new Product(productDetails); //converting each object to class(we returned because it forms a new array)
+  
+    }); //map loops through an array and for each value it runs a function
+    console.log('Load products working');
+    ; //JSON.parse is to convert from JSON to javascript object
+
+  }) //by default fetch makes a get request so, we need to just give it the url to whom we need to make the request to.
+  //Fetch uses promises, so when fetch sends a request to backend and when we get a response, we go to the next step. response is the parameter passed which is passed
+  return promise; //we return the whole promise out of the function, so that we can add more steps after this promise
+}
+/*
+loadProductsFetch().then(() =>{
+  console.log('next step');
+}); //loadProductsFetch() returns a promise, to add more steps after this, we can do .then() right after it
+*/
+
+//XMLHTTP request uses callback() functions to make HTTP requests
 export function loadProducts(fun) { //the renderProductsGrid function is passed in this parameter
   const xhr = new XMLHttpRequest();
 
