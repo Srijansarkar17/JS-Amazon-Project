@@ -88,5 +88,15 @@
         </div>
       </div>
     </div>
+    <script>
+      //URL Parameters(http://127.0.0.1:5500/tracking.html?orderId=123) the ?orderId:123 is the URL parameter, we pass the info in the URL itself
+      const url = new URL(window.location.href) //we create an object new URL()  and in the bracket, we give the URL we want the parameters from
+      console.log(url.searchParams.get('orderId')); //Url parameters are also called search Params, gets the orderId parameter out of the URL, this gives us 123 from orderId=123 in the url
+      //this URL parameter helps us make the page more interactive
+
+      //we can give multiple parameters in the URL(for eg.: http://127.0.0.1:5500/tracking.html?orderId=123&productId=456), here we have two URL params orderId and productId
+
+  
+    </script>
   </body>
 </html>
