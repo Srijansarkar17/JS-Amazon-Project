@@ -802,7 +802,9 @@ export function loadProductsFetch() {
     console.log('Load products working');
     ; //JSON.parse is to convert from JSON to javascript object
 
-  }) //by default fetch makes a get request so, we need to just give it the url to whom we need to make the request to.
+  }).catch((error) => { //Error Handling in Promises
+      console.log('Unexpected Error. Please try again later.');
+  })//by default fetch makes a get request so, we need to just give it the url to whom we need to make the request to.
   //Fetch uses promises, so when fetch sends a request to backend and when we get a response, we go to the next step. response is the parameter passed which is passed
   return promise; //we return the whole promise out of the function, so that we can add more steps after this promise
 }
@@ -829,8 +831,15 @@ export function loadProducts(fun) { //the renderProductsGrid function is passed 
 
     fun(); //we ran the renderProductsGrid function to display the products right after the fetch from the backend(this means in the addEventListener, right after the response is loaded, we run this function to display the products)
   });
+
+  //Error handling, like for eg during HTTP request if the internet connection stops working
+  //For error handling in callbacks, we create a separate callback for error
+  xhr.addEventListener('error', () => {
+    console.log('Unexpected Error. Please try again later.');
+  });
   xhr.open('GET', 'https://supersimplebackend.dev/products');
 
   xhr.send();
 
 };
+

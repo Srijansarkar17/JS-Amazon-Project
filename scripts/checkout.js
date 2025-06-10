@@ -4,24 +4,30 @@ import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 //import '../data/backend-practice.js';
 import { loadProducts, loadProductsFetch } from "../data/products.js";
 import { loadCart } from "../data/cart.js";
- 
+
 //async returns a promise, await lets us wait for a promise to finish, before going to the next line
 async function loadPage() { //async = makes a function return a promise
-    console.log('load page');
+    try { //we do error handling in async await using try and catch blocks
 
-    await loadProductsFetch() //instead of using .then() for this function to finish, we use await(await waits for loadProductsFetch() to finish and get the response from the backend before going to the next line)
-    await new Promise((resolve) => { //we run the function and wait for it to finish
-        loadCart(() => {
-            resolve();
-        });   
+        //throw 'error1'; //using throw we manually create an error which is going to be caught by .catch()
 
-        
-    });
+        await loadProductsFetch() //instead of using .then() for this function to finish, we use await(await waits for loadProductsFetch() to finish and get the response from the backend before going to the next line)
+        await new Promise((resolve, reject) => { //we run the function and wait for it to finish, reject function is used to manually create an error in the future
+            loadCart(() => {
+                //reject('error3');
+                resolve();
+            });
+        });
+    }catch(error) {
+        console.log('Unexpected Error. Please try again');
+    }
+
+
     //after both loadProductsFetch() and loadCart() have run, we run these codes
     renderOrderSummary();
-    renderPaymentSummary(); 
+    renderPaymentSummary();
 }
-    
+
 loadPage()
 
 //we can only use await when we are inside an async function
