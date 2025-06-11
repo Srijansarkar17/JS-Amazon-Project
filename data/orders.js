@@ -1,6 +1,6 @@
 export const orders = JSON.parse(localStorage.getItem('orders')) || []; //we are loading the order items from localStorage(since at the beginning we are not going to have any orders, so we are giving a default value[] empty array, || []), so if there is nothing in localStorage, its gonna use this empty array as a default
 
-export function addOrder(order) {
+export function addOrder() {
     orders.unshift(order); //.unshift will add orders to the front of the array, because we want the recent orders to be at the front
     saveToStorage();
 }
@@ -8,32 +8,37 @@ export function addOrder(order) {
 function saveToStorage() {
     localStorage.setItem('orders', JSON.stringify(orders));
 }
-console.log(orders);
 
-function renderOrdersHTML() {
+export function renderOrdersHTML(products) {
+    
     let orderSummaryHTML = '';
     orders.forEach((orderItem) => {
         const orderId = orderItem.id;
         const orderTime = orderItem.orderTime;
         const TotalCost = orderItem.totalCostCents;
         orderItem.products.forEach((productDetails) => {
+            let productName = 'Unknown Product';
+            let productImage;
+            products.forEach((product) => {
+              if(productDetails.productId === product.id){
+                productName = product.name;
+                productImage = product.image;
+              }
+            });
             const productId = productDetails.productId;
             const deliveryTime = productDetails.
                 estimatedDeliveryTime;
             const quantity = productDetails.quantity;
 
-
-
-            orderSummaryHTML = '';
-
+            
             let html = `
             <div class="product-image-container">
-              <img src="images/products/athletic-cotton-socks-6-pairs.jpg">
+              <img src="${productImage}">
             </div>
 
             <div class="product-details">
               <div class="product-name">
-                Black and Gray Athletic Cotton Socks - 6 Pairs
+                ${productName}
               </div>
               <div class="product-delivery-date">
                 Arriving on: ${deliveryTime}
@@ -55,11 +60,8 @@ function renderOrdersHTML() {
               </a>
             </div>
         `;
-            orderSummaryHTML += html;
+        orderSummaryHTML += html;
         })
-        console.log(orderSummaryHTML);
     });
-    document.querySelectorAll('.js-order-details').innerHTML = orderSummaryHTML;
+    document.querySelector('.js-order-details').innerHTML = orderSummaryHTML;
 }
-renderOrdersHTML();
-
